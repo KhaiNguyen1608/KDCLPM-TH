@@ -44,7 +44,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-       
+
 
         public int DayslnMonth(short year, byte month)
         {
@@ -61,19 +61,14 @@ namespace WindowsFormsApplication1
             {
                 if (year % 400 == 0)
                     return 29;
-                else
-                {
-                    if (year % 100 == 0)
-                        return 28;
-                    else
-                    {
-                        if (year % 4 == 0)
-                            return 29;
-                        else return 28;
-                    }
-                }
+                else if (year % 100 == 0)
+                    return 28;
+                else if (year % 4 == 0)
+                    return 29;
+                else return 28;
             }
-            else return 0;
+            else
+            return 0;
         }
 
 
@@ -102,10 +97,119 @@ namespace WindowsFormsApplication1
         //    throw new NotImplementedException();
         //}
 
+        public static bool CheckInputValidDate(string day)
+        {
+            int num = 0;
+
+            if (!int.TryParse(day, out num))
+                return false;
+            else
+                return true;
+        }
+
+        public static bool CheckInputValidMonth(string month)
+        {
+            int num = 0;
+
+            if (!int.TryParse(month, out num))
+                return false;
+            else
+                return true;
+        }
+
+        public static bool CheckInputValidYear(string year)
+        {
+            int num = 0;
+
+            if (!int.TryParse(year, out num))
+                return false;
+            else
+                return true;
+        }
+
+        public static bool CheckRangDate(string day)
+        {
+            if (int.Parse(day) < 1 || int.Parse(day) > 31)
+                return false;
+            else
+                return true;
+        }
+
+        public static bool CheckRangMonth(string month)
+        {
+            if (int.Parse(month) < 1 || int.Parse(month) > 12)
+                return false;
+            else
+                return true;
+        }
+
+
+        public static bool CheckRangYear(string year)
+        {
+            if (int.Parse(year) < 1000 || int.Parse(year) > 3000)
+                return false;
+            else
+                return true;
+        }
+
         private void Checkbtn_Click(object sender, EventArgs e)
         {
+            string day = txtDay.Text.ToString();
+            string month = txtMonth.Text.ToString();
+            string year = txtYear.Text.ToString();
+      
+  
+
+            if (!CheckInputValidDate(day))
+            {
+                MessageBox.Show("Input data for Day is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!CheckRangDate(day))
+            {
+                MessageBox.Show("Input data for Day is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
 
+
+            if (!CheckInputValidMonth(month))
+            {
+                MessageBox.Show("Input data for Month is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!CheckRangMonth(month))
+            {
+                MessageBox.Show("Input data for Month is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+
+            if (!CheckInputValidYear(year))
+            {
+                MessageBox.Show("Input data for Year is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else if (!CheckRangYear(year))
+            {
+                MessageBox.Show("Input data for Year is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            if (IsValidDate(byte.Parse(month), byte.Parse(day), short.Parse(year)))
+            {
+                MessageBox.Show("dd//mm/yy is correct datetime!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+            else
+            {
+                MessageBox.Show("dd//mm/yy is incorrect datetime!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+           
             //int parsedValue;
             //string year = txtYear.Text.ToString();
             //string month = txtMonth.Text.ToString();
@@ -162,61 +266,6 @@ namespace WindowsFormsApplication1
             //    }
 
             //}
-            string day = txtDay.Text.ToString();
-            string month = txtMonth.Text.ToString();
-            string year = txtYear.Text.ToString();
-
-            int num = 0;
-
-            if (!int.TryParse(day, out num))
-            {
-                MessageBox.Show("Input data for Day is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (int.Parse(day) < 1 || int.Parse(day) > 31)
-            {
-                MessageBox.Show("Input data for Day is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-
-
-            if (!int.TryParse(month, out num))
-            {
-                MessageBox.Show("Input data for Month is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (int.Parse(month) < 1 || int.Parse(month) > 12)
-            {
-                MessageBox.Show("Input data for Month is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-
-
-            if (!int.TryParse(year, out num))
-            {
-                MessageBox.Show("Input data for Year is incorrect format", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else if (int.Parse(year) < 1000 || int.Parse(year) > 3000)
-            {
-                MessageBox.Show("Input data for Year is out of range", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }            
-
-            if (IsValidDate( byte.Parse(month), byte.Parse(day),short.Parse(year)))
-            {
-                MessageBox.Show("dd//mm/yy is correct datetime!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-            else
-            {
-                MessageBox.Show("dd//mm/yy is incorrect datetime!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                return;
-            }
-
-
 
         }
 
